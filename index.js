@@ -1,7 +1,8 @@
 import { chromium } from 'playwright';
 
-const TARGET_PROJECT_ID = '1439348321';
-const PROJECT_AUTHOR = 'SyllivaUser1';
+// --- 正しい値に書き換えてください ---
+const TARGET_PROJECT_ID = '1439348321'; // 正しいプロジェクトID
+const PROJECT_AUTHOR = 'SyblivaUser1';    // 正しい作者のユーザー名（大文字小文字も正確に）
 
 function loadAccounts() {
     const accounts = [];
@@ -106,12 +107,10 @@ async function main() {
                 console.log(` => [スキップ] フォローボタンが見つかりませんでした。`);
             }
 
-            // 成功した場合でも必ずスクリーンショットを保存してアーティファクトに残す
             await page.screenshot({ path: `success-account-${index + 1}.png` });
 
         } catch (err) {
             console.error(` => [エラー発生] ${account.name} で例外エラー:`, err.message);
-            // エラー時の画面キャプチャを保存
             await page.screenshot({ path: `error-account-${index + 1}.png` }).catch(() => {});
         }
 
