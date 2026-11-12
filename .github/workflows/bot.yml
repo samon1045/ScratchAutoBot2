@@ -30,13 +30,26 @@ jobs:
 
       - name: Run Bot
         env:
-          # ここに登録したシークレットが自動的にすべて node.js の process.env に渡されます
           SCRATCH_SESSION_ID_1: ${{ secrets.SCRATCH_SESSION_ID_1 }}
           SCRATCH_CSRF_TOKEN_1: ${{ secrets.SCRATCH_CSRF_TOKEN_1 }}
           SCRATCH_SESSION_ID_2: ${{ secrets.SCRATCH_SESSION_ID_2 }}
           SCRATCH_CSRF_TOKEN_2: ${{ secrets.SCRATCH_CSRF_TOKEN_2 }}
           SCRATCH_SESSION_ID_3: ${{ secrets.SCRATCH_SESSION_ID_3 }}
           SCRATCH_CSRF_TOKEN_3: ${{ secrets.SCRATCH_CSRF_TOKEN_3 }}
+          SCRATCH_SESSION_ID_4: ${{ secrets.SCRATCH_SESSION_ID_4 }}
+          SCRATCH_CSRF_TOKEN_4: ${{ secrets.SCRATCH_CSRF_TOKEN_4 }}
+          SCRATCH_SESSION_ID_5: ${{ secrets.SCRATCH_SESSION_ID_5 }}
+          SCRATCH_CSRF_TOKEN_5: ${{ secrets.SCRATCH_CSRF_TOKEN_5 }}
+          SCRATCH_SESSION_ID_6: ${{ secrets.SCRATCH_SESSION_ID_6 }}
+          SCRATCH_CSRF_TOKEN_6: ${{ secrets.SCRATCH_CSRF_TOKEN_6 }}
+          SCRATCH_SESSION_ID_7: ${{ secrets.SCRATCH_SESSION_ID_7 }}
+          SCRATCH_CSRF_TOKEN_7: ${{ secrets.SCRATCH_CSRF_TOKEN_7 }}
+          SCRATCH_SESSION_ID_8: ${{ secrets.SCRATCH_SESSION_ID_8 }}
+          SCRATCH_CSRF_TOKEN_8: ${{ secrets.SCRATCH_CSRF_TOKEN_8 }}
+          SCRATCH_SESSION_ID_9: ${{ secrets.SCRATCH_SESSION_ID_9 }}
+          SCRATCH_CSRF_TOKEN_9: ${{ secrets.SCRATCH_CSRF_TOKEN_9 }}
+          SCRATCH_SESSION_ID_10: ${{ secrets.SCRATCH_SESSION_ID_10 }}
+          SCRATCH_CSRF_TOKEN_10: ${{ secrets.SCRATCH_CSRF_TOKEN_10 }}
         run: node index.js
 
       - name: Upload Screenshots
