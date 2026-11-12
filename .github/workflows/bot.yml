@@ -1,0 +1,47 @@
+name: Scratch Multi-Account Bot
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # 15分おきに実行
+  workflow_dispatch: # 手動実行用
+
+permissions:
+  contents: write # リポジトリ書き込み権限
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Bot
+        env:
+          # ここに登録したシークレットが自動的にすべて node.js の process.env に渡されます
+          SCRATCH_SESSION_ID_1: ${{ secrets.SCRATCH_SESSION_ID_1 }}
+          SCRATCH_CSRF_TOKEN_1: ${{ secrets.SCRATCH_CSRF_TOKEN_1 }}
+          SCRATCH_SESSION_ID_2: ${{ secrets.SCRATCH_SESSION_ID_2 }}
+          SCRATCH_CSRF_TOKEN_2: ${{ secrets.SCRATCH_CSRF_TOKEN_2 }}
+          SCRATCH_SESSION_ID_3: ${{ secrets.SCRATCH_SESSION_ID_3 }}
+          SCRATCH_CSRF_TOKEN_3: ${{ secrets.SCRATCH_CSRF_TOKEN_3 }}
+        run: node index.js
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-screenshots
+          path: '*.png'
