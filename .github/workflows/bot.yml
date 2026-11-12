@@ -2,11 +2,11 @@ name: Scratch Multi-Account Bot
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # 15分おきに実行
+    - cron: '*/15 * * * *' # 15分おきに自動実行
   workflow_dispatch: # 手動実行用
 
 permissions:
-  contents: write # リポジトリ書き込み権限
+  contents: write
 
 jobs:
   run-bot:
