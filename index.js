@@ -1,9 +1,10 @@
 import { chromium } from 'playwright';
-import fs from 'fs';
 
-const TARGET_PROJECT_ID = '1439348321';
-const PROJECT_AUTHOR = 'SyllivaUser1';  
+// --- 設定情報 ---
+const TARGET_PROJECT_ID = '1439348321'; // 対象のプロジェクトID
+const PROJECT_AUTHOR = 'SyllivaUser1';    // フォローする作者のユーザー名
 
+// --- 複数アカウントの自動読み込み ---
 function loadAccounts() {
     const accounts = [];
     
@@ -35,6 +36,7 @@ async function main() {
 
     const browser = await chromium.launch({ headless: true });
 
+    // 各アカウントごとに順番に処理を実行
     for (const [index, account] of ACCOUNTS.entries()) {
         console.log(`\n--- [${index + 1}/${ACCOUNTS.length}] ${account.name} で処理を実行中... ---`);
 
@@ -62,10 +64,12 @@ async function main() {
         const page = await context.newPage();
 
         try {
+            // 1. プロジェクトページで「いいね」「お気に入り」
             const projectUrl = `https://scratch.mit.edu/projects/${TARGET_PROJECT_ID}/`;
             await page.goto(projectUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
             await page.waitForTimeout(2500);
 
+            // いいね
             const loveBtn = await page.$('.project-likes .icon-love, button.love-button, [data-control="love"]');
             if (loveBtn) {
                 await loveBtn.click();
@@ -73,6 +77,7 @@ async function main() {
                 await page.waitForTimeout(800);
             }
 
+            // お気に入り
             const favBtn = await page.$('.project-favorites .icon-favorite, button.favorite-button, [data-control="favorite"]');
             if (favBtn) {
                 await favBtn.click();
@@ -80,6 +85,7 @@ async function main() {
                 await page.waitForTimeout(800);
             }
 
+            // 2. 作者をフォロー
             const profileUrl = `https://scratch.mit.edu/users/${PROJECT_AUTHOR}/`;
             await page.goto(profileUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
             await page.waitForTimeout(2000);
@@ -99,8 +105,11 @@ async function main() {
             console.log(` => [エラー] ${account.name} の処理失敗:`, err.message);
         }
 
+        // 先にコンテキストを閉じる
         await context.close();
-        await page.waitForTimeout(3000); 
+        
+        // 次のアカウントに進む前のインターバル（ブラウザ自体はまだ起動中なので問題なし）
+        await new Promise(resolve => setTimeout(resolve, 3000));
     }
 
     await browser.close();
